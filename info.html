@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le info - Festa di laurea di cbes</title>
+  <style>
+    :root {
+      --pink: #f2178a;
+      --wine: #72123d;
+      --cream: #fff5fb;
+      --gold: #ffd43b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--wine);
+      font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
+      background: #f95bab url("assets/sfondo-glitter.jpeg") center / cover fixed;
+    }
+
+    main {
+      width: min(760px, calc(100% - 24px));
+      min-height: 100vh;
+      margin: auto;
+      padding: 26px 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .info-box {
+      position: relative;
+      width: 100%;
+      padding: clamp(24px, 6vw, 52px);
+      border: 5px solid rgba(255,255,255,.9);
+      border-radius: 8px;
+      background: rgba(255, 241, 249, .88);
+      box-shadow: 0 24px 60px rgba(91, 5, 48, .34);
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      color: var(--pink);
+      font-size: clamp(2.8rem, 10vw, 5.8rem);
+      line-height: .95;
+      letter-spacing: 0;
+      text-align: center;
+      text-transform: uppercase;
+      text-shadow: 3px 3px 0 white;
+    }
+
+    .details {
+      display: grid;
+      gap: 14px;
+    }
+
+    .detail {
+      padding: 17px;
+      border: 3px dashed rgba(242, 23, 138, .38);
+      border-radius: 8px;
+      background: rgba(255,255,255,.62);
+      font-size: clamp(1.05rem, 3vw, 1.3rem);
+      line-height: 1.4;
+    }
+
+    .detail strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--pink);
+      font-size: .9em;
+      text-transform: uppercase;
+    }
+
+    .closing {
+      margin: 22px 0 0;
+      font-size: clamp(1.15rem, 4vw, 1.55rem);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 26px;
+    }
+
+    button {
+      min-height: 58px;
+      border: 0;
+      border-radius: 8px;
+      padding: 15px 25px;
+      color: white;
+      background: var(--pink);
+      box-shadow: 0 10px 0 #aa0d5d, 0 18px 34px rgba(91, 5, 48, .3);
+      font: 900 1.1rem/1 system-ui, sans-serif;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    button::after { content: " ✨"; }
+
+    .click-star {
+      position: fixed;
+      z-index: 50;
+      pointer-events: none;
+      font-size: 30px;
+      animation: pop .75s ease-out forwards;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: translate(-50%, -20%) scale(.3); }
+      30% { opacity: 1; }
+      to { opacity: 0; transform: translate(-50%, -150%) scale(1.5) rotate(20deg); }
+    }
+
+    @media (max-width: 520px) {
+      .info-box { padding: 22px 16px 28px; }
+      .detail { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="info-box">
+      <h1>Le info serie<br>(più o meno)</h1>
+
+      <div class="details">
+        <div class="detail">
+          <strong>Quando</strong>
+          Domenica 19 luglio 2026, dalle 19:20.
+        </div>
+        <div class="detail">
+          <strong>Dove</strong>
+          Da Bass, via Piacenza 13.
+        </div>
+        <div class="detail">
+          <strong>Formula</strong>
+          Aperitivo con drink, cose buone da mangiare e torta finale. Quindi vieni affamatə, ma con dignità.
+        </div>
+      </div>
+
+      <p class="closing">Ora resta solo una domanda fondamentale...</p>
+
+      <div class="actions">
+        <button type="button" id="nextButton">Dimmi se ci sei</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const button = document.querySelector("#nextButton");
+
+    button.addEventListener("click", () => {
+      const rect = button.getBoundingClientRect();
+      [rect.left + 10, rect.left + rect.width / 2, rect.right - 8].forEach((left, index) => {
+        const star = document.createElement("span");
+        star.className = "click-star";
+        star.textContent = index === 1 ? "⭐" : "✨";
+        star.style.left = `${left}px`;
+        star.style.top = `${rect.top}px`;
+        star.style.animationDelay = `${index * 70}ms`;
+        document.body.appendChild(star);
+        star.addEventListener("animationend", () => star.remove());
+      });
+
+      window.setTimeout(() => {
+        window.location.href = "rsvp.html";
+      }, 500);
+    });
+  </script>
+</body>
+</html>
